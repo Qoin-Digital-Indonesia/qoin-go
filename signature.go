@@ -13,8 +13,7 @@ import (
 	"os"
 )
 
-// GenerateSignature returns generated RSA signature
-func GenerateSignature(text string) string {
+func generateSignature(text string) string {
 	signer, err := loadPrivateKey()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Signer is damaged: %s", err)
