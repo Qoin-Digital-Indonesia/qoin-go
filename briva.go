@@ -1,13 +1,15 @@
 package qoin
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 )
 
-// BriVaCreateOrder returns BRI VA Create Order API endpoint
-func BriVaCreateOrder(body map[string]interface{}) string {
+// BriVaCreateOrder returns the response from BRI VA Create Order API
+func BriVaCreateOrder(body map[string]interface{}) map[string]interface{} {
 	var endpoint string
 
 	switch isProduction {
@@ -26,8 +28,29 @@ func BriVaCreateOrder(body map[string]interface{}) string {
 	trimmedBody := string(jsonBody)[:bodyLastIndex]
 	payload := trimmedBody + ",\"SecretKey\":\"" + secretKey + "\"}"
 	signature := generateSignature(payload)
-	fmt.Println(payload)
-	fmt.Println(signature)
 
-	return endpoint
+	client := &http.Client{}
+	request, err := http.NewRequest("POST", endpoint, bytes.NewBuffer(jsonBody))
+	if err != nil {
+		fmt.Println("[BRI VA Create Order] Create HTTP request got error:", err)
+	}
+
+	request.Header.Set("Accept", "application/json")
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Signature", signature)
+
+	response, err := client.Do(request)
+	if err != nil {
+		fmt.Println("[BRI VA Create Order] Send HTTP request got error:", err)
+	}
+
+	defer response.Body.Close()
+
+	var result map[string]interface{}
+	err = json.NewDecoder(response.Body).Decode(&result)
+	if err != nil {
+		fmt.Println("[BRI VA Create Order] JSON decode response got error:", err)
+	}
+
+	return result
 }
