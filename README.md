@@ -181,18 +181,18 @@ qoin.SetEnvironment("sandbox") // sandbox || production
 qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
 qoin.SetSecretKey("<your secret key>")
 response := qoin.SnapCreateOrder(map[string]interface{}{
-    "merchantCode": "<your merchant code>",
-    "linkPayment": "12345",
-    "referenceNo": "<reference number>",
-    "expiredDate": "",
-    "requestTime": time.Now().Format("2006-01-02 15:04:05"),
-    "currency": "IDR",
-    "paymentMethod": "",
+    "merchantCode":   "<your merchant code>",
+    "linkPayment":    "12345",
+    "referenceNo":    "<reference number>",
+    "expiredDate":    "",
+    "requestTime":    time.Now().Format("2006-01-02 15:04:05"),
+    "currency":       "IDR",
+    "paymentMethod":  "",
     "paymentChannel": "",
-    "customerName": "Giovanni Reinard",
-    "customerPhone": "628123456789",
-    "customerEmail": "giovanni@qoin.id",
-    "product": description.Objects,
-    "totalPrice": 21000,
+    "customerName":   "Giovanni Reinard",
+    "customerPhone":  "628123456789",
+    "customerEmail":  "giovanni@qoin.id",
+    "product":        description.Objects,
+    "totalPrice":     21000,
 })
 ```
