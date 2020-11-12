@@ -31,7 +31,10 @@ descriptionJSON, err := json.Marshal(description.Objects)
 ```
 import "github.com/Qoin-Digital-Indonesia/qoin-go"
 
-var body = map[string]interface{}{
+qoin.SetEnvironment("sandbox") // sandbox || production
+qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
+qoin.SetSecretKey("<your secret key>")
+response := qoin.BriVaCreateOrder(map[string]interface{}{
     "MerchantNumber":  "<your merchant code>",
     "ReferenceNumber": "<reference number>",
     "Amount":          21000,
@@ -40,10 +43,17 @@ var body = map[string]interface{}{
     "UserName":        "Giovanni Reinard",
     "UserContact":     "628123456789;giovanni@qoin.id", // format: phone_number;email_address
     "RequestTime":     time.Now().Format("2006-01-02 15:04:05"),
-}
+})
+```
+#### b. Get Status
+```
+import "github.com/Qoin-Digital-Indonesia/qoin-go"
 
 qoin.SetEnvironment("sandbox") // sandbox || production
 qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
 qoin.SetSecretKey("<your secret key>")
-response := qoin.BriVaCreateOrder(body)
+response := qoin.BriVaGetStatus(map[string]string{
+    "OrderNumber": "<order number>",
+    "ReqTime":     time.Now().Format("2006-01-02 15:04:05"),
+})
 ```
