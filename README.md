@@ -77,3 +77,13 @@ response := qoin.CreditCardCreateOrder(map[string]interface{}{
     "merchant_code":  "<your merchant code>",
 })
 ```
+#### b. Charge
+```
+import "github.com/Qoin-Digital-Indonesia/qoin-go"
+
+qoin.SetEnvironment("sandbox") // sandbox || production
+qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
+response := qoin.CreditCardCharge(map[string]string{}{
+    "order_no": "<order number>",
+})
+```
