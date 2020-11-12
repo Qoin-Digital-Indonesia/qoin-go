@@ -87,3 +87,17 @@ response := qoin.CreditCardCharge(map[string]string{}{
     "order_no": "<order number>",
 })
 ```
+#### c. Get Status
+```
+import "github.com/Qoin-Digital-Indonesia/qoin-go"
+
+qoin.SetEnvironment("sandbox") // sandbox || production
+qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
+qoin.SetSecretKey("<your secret key>")
+qoin.SetReferenceNumber("<reference number>")
+response := qoin.CreditCardGetStatus(map[string]string{
+    "MerchantCode":  "<your merchant code>",
+    "OrderNo":       "<order number>",
+    "ReqTime":       time.Now().Format("2006-01-02 15:04:05"),
+})
+```
