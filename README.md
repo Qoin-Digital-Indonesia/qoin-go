@@ -136,3 +136,38 @@ response := qoin.OvoGetStatus(map[string]string{
     "ReferenceNo":  "<reference number>",
 })
 ```
+
+### 4. LinkAja
+#### a. Create Order
+```
+import "github.com/Qoin-Digital-Indonesia/qoin-go"
+
+qoin.SetEnvironment("sandbox") // sandbox || production
+qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
+qoin.SetSecretKey("<your secret key>")
+response := qoin.LinkAjaCreateOrder(map[string]interface{}{
+    "Amount":         10,
+    "Currency":       "IDR",
+    "Description":    string(descriptionJSON),
+    "ReqTime":        time.Now().Format("2006-01-02 15:04:05"),
+    "MerchantCode":   "<your merchant code>",
+    "ReferenceNo":    "<reference number>",
+    "CustomerName":   "Giovanni Reinard",
+    "CustomerPhone":  "08123456789",
+    "CustomerEmail":  "giovanni@qoin.id",
+    "WalletType":     "LINKAJA",
+})
+```
+#### b. Get Status
+```
+import "github.com/Qoin-Digital-Indonesia/qoin-go"
+
+qoin.SetEnvironment("sandbox") // sandbox || production
+qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
+qoin.SetSecretKey("<your secret key>")
+response := qoin.LinkAjaGetStatus(map[string]string{
+    "RequestTime":  time.Now().Format("2006-01-02 15:04:05"),
+    "MerchantCode": "<your merchant code>",
+    "ReferenceNo":  "<reference number>",
+})
+```
