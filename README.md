@@ -57,3 +57,23 @@ response := qoin.BriVaGetStatus(map[string]string{
     "ReqTime":     time.Now().Format("2006-01-02 15:04:05"),
 })
 ```
+
+### 2. Credit Card
+#### a. Create Order
+```
+import "github.com/Qoin-Digital-Indonesia/qoin-go"
+
+qoin.SetEnvironment("sandbox") // sandbox || production
+qoin.SetPrivateKey(`<your private key>`) // must use back quote (`) symbol
+qoin.SetSecretKey("<your secret key>")
+response := qoin.CreditCardCreateOrder(map[string]interface{}{
+    "reference_no":   "<reference number>",
+    "account_number": "4000000000000002",
+    "exp_month":      "12",
+    "exp_year":       "2020",
+    "card_cvn":       "123",
+    "amount":         25000,
+    "request_time":   time.Now().Format("2006-01-02 15:04:05"),
+    "merchant_code":  "<your merchant code>",
+})
+```
