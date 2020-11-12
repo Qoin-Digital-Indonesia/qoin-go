@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 )
 
 // CreditCardCreateOrder returns the response from Credit Card Create Order API
@@ -118,9 +117,9 @@ func CreditCardGetStatus(body map[string]string) map[string]interface{} {
 
 	switch isProduction {
 	case true:
-		endpoint = "https://dev-apipg.qoin.id/bri/paymentstatus"
+		endpoint = "https://dev-apipg.qoin.id/credit-card/status"
 	default:
-		endpoint = "https://dev-sandbox-apipg.qoin.id/sandbox/bri/paymentstatus"
+		endpoint = "https://dev-sandbox-apipg.qoin.id/sandbox/credit-card/status"
 	}
 
 	jsonBody, err := json.Marshal(body)
@@ -128,10 +127,16 @@ func CreditCardGetStatus(body map[string]string) map[string]interface{} {
 		fmt.Println("[Credit Card Get Status] JSON encode body got error:", err)
 	}
 
-	bodyLastIndex := strings.LastIndex(string(jsonBody), "}")
-	trimmedBody := string(jsonBody)[:bodyLastIndex]
-	payload := trimmedBody + ",\"SecretKey\":\"" + secretKey + "\"}"
-	signature := generateSignature(payload)
+	payload, err := json.Marshal(map[string]string{
+		"RefNo":     referenceNumber,
+		"ReqTime":   body["ReqTime"],
+		"SecretKey": secretKey,
+	})
+	if err != nil {
+		fmt.Println("[Credit Card Get Status] JSON encode payload got error:", err)
+	}
+
+	signature := generateSignature(string(payload))
 
 	client := &http.Client{}
 	request, err := http.NewRequest("POST", endpoint, bytes.NewBuffer(jsonBody))
